@@ -15,25 +15,43 @@ class Arena
 
     private array $monsters;
     private Hero $hero;
+    private array $tiles;
 
     private int $size = 10;
 
-    public function __construct(Hero $hero, array $monsters)
+    public function __construct(Hero $hero, array $monsters, array $tiles)
     {
         $this->hero = $hero;
         $this->monsters = $monsters;
+        $this->tiles = $tiles;
     }
 
-    public function move(Fighter $fighter, string $direction)
+    public function getTile(int $x, int $y): ?Tile
     {
-        $x = $fighter->getX();
-        $y = $fighter->getY();
+        foreach ($this->getTiles() as $tile) {
+            if ($tile->getX() === $x && $tile->getY() === $y) {
+                return $tile;
+            }
+        }
+
+        return null;
+    }
+
+    public function move(Movable $movable, string $direction)
+    {
+        $x = $movable->getX();
+        $y = $movable->getY();
         if (!key_exists($direction, self::DIRECTIONS)) {
             throw new Exception('Unknown direction');
         }
 
         $destinationX = $x + self::DIRECTIONS[$direction][0];
         $destinationY = $y + self::DIRECTIONS[$direction][1];
+
+        $destinationTile = $this->getTile($destinationX, $destinationY);
+        if ($destinationTile instanceof Tile && !$destinationTile->getIsCrossable($movable)) {
+            throw new Exception('Not crossable tile');
+        }
 
         if ($destinationX < 0 || $destinationX >= $this->getSize() || $destinationY < 0 || $destinationY >= $this->getSize()) {
             throw new Exception('Out of Map');
@@ -45,8 +63,16 @@ class Arena
             }
         }
 
-        $fighter->setX($destinationX);
-        $fighter->setY($destinationY);
+        $movable->setX($destinationX);
+        $movable->setY($destinationY);
+
+        if ($movable instanceof Hero) {
+            foreach ($this->getMonsters() as $monster) {
+                if ($monster instanceof Movable) {
+                    $this->move($monster, array_rand(self::DIRECTIONS));
+                }
+            }
+        }
     }
 
     public function getDistance(Fighter $startFighter, Fighter $endFighter): float
@@ -121,5 +147,21 @@ class Arena
     public function getSize(): int
     {
         return $this->size;
+    }
+
+    /**
+     * Get the value of tiles
+     */
+    public function getTiles(): array
+    {
+        return $this->tiles;
+    }
+
+    /**
+     * Set the value of tiles
+     */
+    public function setTiles(array $tiles): void
+    {
+        $this->tiles = $tiles;
     }
 }
