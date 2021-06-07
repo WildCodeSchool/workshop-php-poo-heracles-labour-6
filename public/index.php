@@ -3,14 +3,13 @@
 require '../vendor/autoload.php';
 
 use App\Arena;
-use App\Grass;
-use App\Shield;
-use App\Weapon;
-use App\Hero;
-use App\Bush;
-use App\Hind;
-use App\Monster;
-use App\Water;
+use App\Tile\Grass;
+use App\Tile\Bush;
+use App\Tile\Water;
+use App\Inventory\Shield;
+use App\Inventory\Weapon;
+use App\Fighter\Hero;
+use App\Fighter\Hind;
 
 /** ⛔ Ne pas modifier ⛔ **/
 session_start();

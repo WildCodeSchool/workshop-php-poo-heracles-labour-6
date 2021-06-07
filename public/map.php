@@ -1,7 +1,5 @@
 <?php
 
-use App\Destroyable;
-
 if (isset($arena)) : ?>
     <div class="map" style="--tiles-number: <?= $arena->getSize() ?>">
         <img class="boussole" src="assets/images/boussole.svg" alt="boussole">

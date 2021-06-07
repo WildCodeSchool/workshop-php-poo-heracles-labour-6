@@ -1,8 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Fighter;
 
 use App\Mappable;
+use App\Service\Level;
 
 abstract class Fighter implements Mappable
 {

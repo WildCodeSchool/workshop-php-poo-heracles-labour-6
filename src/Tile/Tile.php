@@ -1,6 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Tile;
+
+use App\Mappable;
+use App\Movable;
 
 abstract class Tile implements Mappable
 {

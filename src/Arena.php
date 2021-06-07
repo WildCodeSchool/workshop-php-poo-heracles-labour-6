@@ -2,6 +2,10 @@
 
 namespace App;
 
+use App\Fighter\Fighter;
+use App\Fighter\Hero;
+use App\Movable;
+use App\Tile\Tile;
 use Exception;
 
 class Arena
@@ -47,7 +51,6 @@ class Arena
                 $this->move($monster, $randomDirection);
             }
         }
-
     }
 
     public function move(Movable $movable, string $direction)
@@ -119,28 +122,11 @@ class Arena
     }
 
     /**
-     * Set the value of monsters
-     *
-     */
-    public function setMonsters($monsters): void
-    {
-        $this->monsters = $monsters;
-    }
-
-    /**
      * Get the value of hero
      */
     public function getHero(): Hero
     {
         return $this->hero;
-    }
-
-    /**
-     * Set the value of hero
-     */
-    public function setHero($hero): void
-    {
-        $this->hero = $hero;
     }
 
     /**
@@ -157,13 +143,5 @@ class Arena
     public function getTiles(): array
     {
         return $this->tiles;
-    }
-
-    /**
-     * Set the value of tiles
-     */
-    public function setTiles(array $tiles): void
-    {
-        $this->tiles = $tiles;
     }
 }

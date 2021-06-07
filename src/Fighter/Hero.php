@@ -1,6 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Fighter;
+
+use App\Inventory\Shield;
+use App\Inventory\Weapon;
+use App\Movable;
 
 class Hero extends Fighter implements Movable
 {

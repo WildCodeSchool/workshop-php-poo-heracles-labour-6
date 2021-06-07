@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Tile;
 
 class Water extends Tile
 {

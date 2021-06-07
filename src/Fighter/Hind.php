@@ -1,6 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Fighter;
+
+use App\Movable;
 
 class Hind extends Monster implements Movable
 {

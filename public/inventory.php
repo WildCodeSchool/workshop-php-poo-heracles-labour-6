@@ -8,7 +8,7 @@
         <div data-slot="Main weapon" class="slot">
             <?php
 
-            use App\Level;
+            use App\Service\Level;
 
             if (method_exists($arena->getHero(), 'getWeapon') && $arena->getHero()->getWeapon() !== null) : ?>
                 <img src="<?= $arena->getHero()->getWeapon()->getImage() ?>" alt="weapon">

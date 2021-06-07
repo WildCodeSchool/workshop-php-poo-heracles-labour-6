@@ -1,6 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Tile;
+
+use App\Fighter\Hind;
+use App\Movable;
 
 class Bush extends Tile
 {
