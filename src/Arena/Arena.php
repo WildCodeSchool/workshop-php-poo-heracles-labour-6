@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Arena;
 
 use App\Fighter\Fighter;
 use App\Fighter\Hero;
@@ -129,6 +129,7 @@ class Arena
         return $this->hero;
     }
 
+
     /**
      * Get the value of size
      */
@@ -144,4 +145,6 @@ class Arena
     {
         return $this->tiles;
     }
+
+
 }

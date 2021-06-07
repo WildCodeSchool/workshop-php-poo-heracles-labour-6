@@ -2,7 +2,7 @@
 
 require '../vendor/autoload.php';
 
-use App\Arena;
+use App\Arena\Arena;
 use App\Tile\Grass;
 use App\Tile\Bush;
 use App\Tile\Water;
