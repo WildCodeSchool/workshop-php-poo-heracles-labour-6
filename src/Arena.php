@@ -37,19 +37,29 @@ class Arena
         return null;
     }
 
+    public function arenaMove(string $direction)
+    {
+        $this->move($this->getHero(), $direction);
+
+        foreach($this->getMonsters() as $monster) {
+            if ($monster instanceof Movable) {
+                $randomDirection = array_rand(self::DIRECTIONS);
+                $this->move($monster, $randomDirection);
+            }
+        }
+
+    }
+
     public function move(Movable $movable, string $direction)
     {
         $x = $movable->getX();
         $y = $movable->getY();
-        if (!key_exists($direction, self::DIRECTIONS)) {
-            throw new Exception('Unknown direction');
-        }
 
         $destinationX = $x + self::DIRECTIONS[$direction][0];
         $destinationY = $y + self::DIRECTIONS[$direction][1];
 
         $destinationTile = $this->getTile($destinationX, $destinationY);
-        if ($destinationTile instanceof Tile && !$destinationTile->getIsCrossable($movable)) {
+        if ($destinationTile instanceof Tile && !$destinationTile->isCrossable($movable)) {
             throw new Exception('Not crossable tile');
         }
 
@@ -65,14 +75,6 @@ class Arena
 
         $movable->setX($destinationX);
         $movable->setY($destinationY);
-
-        if ($movable instanceof Hero) {
-            foreach ($this->getMonsters() as $monster) {
-                if ($monster instanceof Movable) {
-                    $this->move($monster, array_rand(self::DIRECTIONS));
-                }
-            }
-        }
     }
 
     public function getDistance(Fighter $startFighter, Fighter $endFighter): float

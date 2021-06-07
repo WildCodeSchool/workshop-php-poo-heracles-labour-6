@@ -5,5 +5,5 @@ namespace App;
 class Water extends Tile
 {
     protected string $image = 'water.jpg';
-    protected bool $isCrossable = false;
+    protected bool $crossable = false;
 }

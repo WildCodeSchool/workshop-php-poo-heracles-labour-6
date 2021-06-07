@@ -5,15 +5,15 @@ namespace App;
 class Bush extends Tile
 {
     protected string $image = 'bush.png';
-    protected bool $isCrossable = false;
+    protected bool $crossable = false;
    
-    public function getIsCrossable(Movable $movable): bool
+    public function isCrossable(Movable $movable): bool
     {
         if($movable instanceof Hind) {
-            $this->isCrossable = true;
+            return true;
         }
 
-        return $this->isCrossable;
+        return $this->crossable;
     }
 
 }

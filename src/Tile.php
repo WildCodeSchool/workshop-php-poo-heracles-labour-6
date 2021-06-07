@@ -5,7 +5,7 @@ namespace App;
 abstract class Tile implements Mappable
 {
     protected string $image = '';
-    protected bool $isCrossable = true;
+    protected bool $crossable = true;
 
     public function __construct(int $x, int $y)
     {
@@ -65,22 +65,22 @@ abstract class Tile implements Mappable
     }
 
     /**
-     * Get the value of isCrossable
+     * Get the value of crossable
      * @return mixed
      */
-    public function getIsCrossable(Movable $movable): bool
+    public function isCrossable(Movable $movable): bool
     {
-        return $this->isCrossable;
+        return $this->crossable;
     }
 
     /**
-     * Set the value of isCrossable
-     * @param mixed $isCrossable 
+     * Set the value of crossable
+     * @param mixed $crossable 
      * @return self
      */
-    public function setIsCrossable(bool $isCrossable): self
+    public function setCrossable(bool $crossable): self
     {
-        $this->isCrossable = $isCrossable;
+        $this->crossable = $crossable;
         return $this;
     }
 }
