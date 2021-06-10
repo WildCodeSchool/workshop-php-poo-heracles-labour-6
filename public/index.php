@@ -3,13 +3,7 @@
 require '../vendor/autoload.php';
 
 use App\Arena\Arena;
-use App\Tile\Grass;
-use App\Tile\Bush;
-use App\Tile\Water;
-use App\Inventory\Shield;
-use App\Inventory\Weapon;
-use App\Fighter\Hero;
-use App\Fighter\Hind;
+use App\Arena\ArenaAugias;
 
 /** ⛔ Ne pas modifier ⛔ **/
 session_start();
@@ -22,105 +16,7 @@ $arena = $_SESSION['arena'] ?? null;
 
 /** initialisation **/
 if (!$arena instanceof Arena) {
-    $heracles = new Hero('Heracles', 0, 0);
-    $hind = new Hind('Ceryneian Hind', 9, 6);
-    
-    $sword = new Weapon(10);
-    $heracles->setWeapon($sword);
-    $shield = new Shield();
-    $heracles->setShield($shield);
-
-    $tiles = $elements = [];
-    $waters = $bushes = $grasses = [];
-    if (class_exists(Grass::class)) {
-        $grasses = [
-            new Grass(0, 0),
-            new Grass(1, 0),
-            new Grass(8, 0),
-            new Grass(9, 0),
-            new Grass(0, 1),
-            new Grass(1, 1),
-            new Grass(8, 1),
-            new Grass(9, 1),
-            new Grass(0, 2),
-            new Grass(1, 2),
-            new Grass(7, 2),
-            new Grass(8, 2),
-            new Grass(0, 3),
-            new Grass(1, 3),
-            new Grass(2, 3),
-            new Grass(3, 3),
-            new Grass(4, 3),
-            new Grass(7, 3),
-            new Grass(8, 3),
-            new Grass(0, 4),
-            new Grass(1, 4),
-            new Grass(0, 5),
-            new Grass(0, 6),
-        ];
-    }
-    if (class_exists(Water::class)) {
-        $waters = [
-            new Water(2, 0),
-            new Water(3, 0),
-            new Water(4, 0),
-            new Water(5, 0),
-            new Water(6, 0), 
-            new Water(7, 0), 
-            new Water(2, 1),
-            new Water(3, 1),
-            new Water(4, 1),
-            new Water(5, 1),
-            new Water(6, 1),
-            new Water(7, 1),
-            new Water(3, 1),
-            new Water(4, 1),
-            new Water(3, 2),
-            new Water(4, 2),
-            new Water(5, 2),
-            new Water(6, 2),
-            new Water(5, 3),
-            new Water(6, 3),
-            new Water(6, 4),
-            new Water(6, 5),
-            new Water(7, 5),
-            new Water(7, 6),
-            new Water(0, 8),
-            new Water(1, 8),
-            new Water(0, 7),
-            new Water(0, 9),
-            new Water(1, 9),
-            new Water(2, 9),
-            new Water(3, 9),
-            new Water(4, 9),
-            new Water(5, 9),
-            new Water(7, 4),
-            new Water(8, 4),
-            new Water(8, 4),
-            new Water(8, 5),
-            new Water(9, 5),
-
-        ];
-    }
-    if (class_exists(Bush::class)) {
-        $bushes = [
-            new Bush(2, 2),
-            new Bush(4, 4),
-            new Bush(3, 7),
-            new Bush(2, 5),
-            new Bush(6, 9),
-            new Bush(7, 9),
-            new Bush(7, 8),
-            new Bush(7, 7),
-            new Bush(6, 8),
-            new Bush(9, 2),
-            new Bush(9, 3),
-        ];
-    }
-
-    $tiles = [...$waters, ...$grasses, ...$bushes];
-
-    $arena = new Arena($heracles, [$hind], $tiles);
+    $arena = new ArenaAugias();
 }
 
 $_SESSION['arena'] = $arena;
@@ -132,7 +28,6 @@ try {
     if (isset($_GET['fight']) && method_exists($arena, 'battle')) {
         $arena->battle($_GET['fight']);
     }  
-
 } catch (Exception $exception) {
     $error = $exception->getMessage();
 }
