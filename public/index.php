@@ -3,7 +3,7 @@
 require '../vendor/autoload.php';
 
 use App\Arena\Arena;
-use App\Arena\ArenaAugias;
+use App\Arena\ArenaAugeas;
 
 /** ⛔ Ne pas modifier ⛔ **/
 session_start();
@@ -16,7 +16,7 @@ $arena = $_SESSION['arena'] ?? null;
 
 /** initialisation **/
 if (!$arena instanceof Arena) {
-    $arena = new ArenaAugias();
+    $arena = new ArenaAugeas();
 }
 
 $_SESSION['arena'] = $arena;
@@ -41,13 +41,13 @@ try {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heracles Labours #5</title>
+    <title>Heracles Labours #6</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
     <header>
-        <h1>Heracles vs Ceryneian Hind</h1>
+        <h1>The Augean stables</h1>
         <a class="btn reset" href="?reset=reset">Reset</a>
     </header>
     <main>

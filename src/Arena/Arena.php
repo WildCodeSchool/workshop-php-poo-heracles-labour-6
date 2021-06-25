@@ -8,7 +8,7 @@ use App\Movable;
 use App\Tile\Tile;
 use Exception;
 
-abstract class Arena
+class Arena
 {
     public const DIRECTIONS = [
         'N' => [0, -1],
