@@ -139,5 +139,4 @@ class ArenaAugeas extends Arena
 
         parent::__construct($hero, $monsters, $tiles);
     }
-
 }

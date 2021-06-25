@@ -24,7 +24,9 @@ Modifie `ArenaAugeas` pour qu'Héraclès ait bien son arme en seconde main.
 
 # Des ptits trous, des ptits trous.
 
-Notre héros va maintenant pouvoir creuser (le simple fait d'avoir une pelle dans la main, un bouton "Dig" est apparu sur l'interface !). Partons du principe que ce mécanisme de *gameplay* ne sera disponible que pour ce niveau : créé une méthode `digArena()` dans `ArenaAugeas`. Cette méthode va :
+Notre héros va maintenant pouvoir creuser. Partons du principe que ce mécanisme de *gameplay* ne sera disponible que pour ce niveau : créé une méthode `digArena()` dans `ArenaAugeas` (le simple fait d'avoir créer la méthode, un bouton "Dig" est apparu sur l'interface !)
+
+Cette méthode va :
 1. Vérifier que le héros se trouve sur une tuile de type `Grass` qui vont être les seules qu'il pourra creuser. Sinon renvoyer une exception.
 2. Vérifier que le héros porte bien une pelle en seconde main, sinon renvoyer une exception.
 
@@ -40,23 +42,23 @@ L'idée maintenant, c'est de pouvoir dévier le cours de la rivière. Ainsi, si 
 Dans `digArena()`, juste après l'appel à la méthode `dig()` de la tuile, tu vas appeler une méthode privée `fill()` qui va contenir la logique de ce remplissage.
 
 Dans `fill()` tu vas devoir
-1. Récupérer les cases adjascente à la case creusée. Pour cela créée une méthode privée getAdjacentTiles()
-2. Vérifier si l'une de ces tuiles et de type Water.
-3. Si c'est le cas, tu vas échanger la tuile Grass sous le héros par une nouvelle tuile de type Water. Pour réaliser cela, tu vas créer une publice méthode `addTile()` et `removeTile()` contenant la logique. Ce mécanisme étant assez générique, tu crééra ces méthodes directement dans `Arena`. Réfléchis aux paramètres et à l'implémentation. Une fois que cela fonctionne, créer une méthode `switchTile(Tile $oldTile, Tile $newTile)` qui sera plus simple à utiliser, et qui se reposera sur les deux méthodes précédentes.
+1. Récupérer les cases adjascente à la case creusée. Pour cela créée une méthode privée `getAdjacentTiles()`
+2. Vérifier si l'une de ces tuiles et de type `Water`.
+3. Si c'est le cas, tu vas échanger la tuile Grass sous le héros par une nouvelle tuile de type Water. Pour réaliser cela, tu vas créer une publice méthode `addTile()` et `removeTile()` contenant cette logique. Ce mécanisme étant assez générique, tu crééra ces méthodes directement dans `Arena`. Réfléchis aux paramètres et à l'implémentation. Une fois que cela fonctionne, créer une méthode `switchTile(Tile $oldTile, Tile $newTile)` qui sera plus simple à utiliser, et qui se reposera sur les deux méthodes précédentes.
 
 Super, si tu creuses loin de l'eau, tu fais un trou, si tu creuses le long de l'eau, tu commences à déplacer le lit de la rivière.
 
 # Recursivité
 
-Mais voilà, tout ne fonctionne pas encore bien, car si tu creuses un trou à 2 cases de l'eau, puis que tu creuses la case entre les deux, le premier trou ne se remplis pas, l'eau s'arrête seulement au trou adjacent. Qu'elle est cette magie ? Héraclès décide de consulter en urgence son oncle Poséidon. Ce dernier lui donne rapidement la solution, utiliser la récursivité ! 
+Mais voilà, tout ne fonctionne pas encore bien, car si tu creuses un trou à une distance de 2 cases de l'eau, puis que tu creuses la case entre les deux, le trou le plus proche se remplis mais pas le premier. L'eau s'arrête seulement au trou adjacent. Qu'elle est cette magie ? Héraclès décide de consulter en urgence son oncle Poséidon. Ce dernier lui donne rapidement la solution, utiliser la récursivité ! 
 
 Quelle est le problème ? Reprenons le déroulé de ton code
 1. Héraclès creuse dans l'herbe
 2. Un trou se forme
 3. S'il y a de l'eau à coté de ce trou, il se transforme en eau.
-Mais à aucun moment on ne cherche à voir si cette nouvelle tuile d'eau se trouve elle même à proximité d'un trou qu'elle devrait alors remplir. Puis s'il y a de nouveau un trou adjacent à la nouvelle tuile d'eau, il devrait se remplir. Puis s'il y a de nouveau un trou adjacent à la nouvelle tuile d'eau, il devrait se remplir. Puis s'il y a de nouveau un trou adjacent à la nouvelle tuile d'eau, il devrait se remplir.... STOP ! 
+Mais à aucun moment on ne cherche à voir si cette nouvelle tuile d'eau se trouve elle même à proximité d'un trou qu'elle devrait alors remplir. Puis si cette nouvelle tuile d'eau se trouve elle même à proximité d'un trou qu'elle devrait alors remplir. nouvelle tuile d'eau se trouve elle même à proximité d'un trou qu'elle devrait alors remplir. Puis .... STOP ! 
 
-Comme tu le vois, il va falloir utiliser la méthode `fill()` un nombre indéfini de fois. Et à chaque utilisation de `fill()`, il faut retenter de *fill* les éventuels trous jusqu'à ce qu'il n'y en ait plus. La méthode `fill()` va donc devoir s'appeller elle même, tant que la condition de sortie (plus de trou adjacent non remplis) ne sera pas validée. C'est celà la **récursivité**.
+Comme tu le vois, il va falloir utiliser la méthode `fill()` un nombre indéfini de fois. Et à chaque utilisation de `fill()`, il faut retenter de *fill* les éventuels trous jusqu'à ce qu'il n'y en ait plus. La méthode `fill()` va donc devoir **s'appeller elle même**, tant que la condition de sortie (absence de trou adjacent non remplis) ne sera pas validée. C'est celà la **récursivité**.
 
 Reprend donc le code de `fill()`.
 1. Récupères les tuiles adjascentes au trou
@@ -72,6 +74,6 @@ Tous les trous se remplissent bien, Héraclès remercie Poséidon pour son aide 
     
 # La victoire
 
-Pour mener à bien son travail, notre héros doit amener le lit de la rivière jusqu'aux portes des écuries. Créé une méthode `isVictory()` dans `ArenaAugeas`. Cette méthode renverra true si les conditions de la victoire sont remplis. Pour être certain que cette méthode soit présente pour toutes les arènes futures, ajoute un méthode abstraite `isVictory()` (vide) dans la classe mère `Arena`. Cette classe devient donc elle-même abstraite.
+Pour mener à bien son travail, notre héros doit amener le lit de la rivière jusqu'aux portes des écuries. Créé une méthode `isVictory()` dans `ArenaAugeas`. Cette méthode renverra true si les conditions de la victoire sont remplis. Pour être certain que cette méthode soit présente pour toutes les arènes futures, ajoute un méthode abstraite `isVictory()`  dans la classe mère `Arena`. Le méthode est abstraite car l'implémentation de la victoire sera différente pour chacun des travaux. Attention, la classe `Arena` devient donc elle-même abstraite.
 
-Pour faire au plus simple, nous allons partir du principe que, pour ce niveau, il faut qu'il y ait de l'eau sur la tuile de coordonnée 5,7 qui est juste devant les portes de l'écurie. Afin de ne pas mettre les valeurs en dur, créé deux constantes `VICTORY_X = 5` et `VICTORY_Y = 7`. Dans `isVictory()`, teste si la tuile à ces coordonnée est de type Water, si c'est le cas renvoie true. La méthode est appelée dans *index.php* à chaque fois qu'une action est effectuée par le héros. Si la méthode renvoie `true`, un message est alors affiché à l'écran. 
+Pour faire au plus simple, nous allons partir du principe que, pour ce niveau, il faut qu'il y ait de l'eau sur la tuile de coordonnée 5,7 qui est juste devant les "portes" de l'écurie. Afin de ne pas mettre les valeurs en dur, créé deux constantes `VICTORY_X = 5` et `VICTORY_Y = 7` dans `ArenaAugeas`. Dans la méthode `isVictory()`, teste si la tuile aux coordonnées de VICTORY X et Y est de type Water, si c'est bien le cas renvoie `true`, sinon renvoi `false`. La méthode est appelée dans *index.php* à chaque fois qu'une action est effectuée par le héros. Dès lors que la méthode renvoie `true`, un message est affiché à l'écran pour signifier la victoire, félicitations ! 

@@ -19,12 +19,15 @@
                 <img src="<?= $arena->getHero()->getShield()->getImage() ?>" alt="shield">
             <?php endif; ?>
         </div>
-        <div data-slot="Secondary weapon" class="slot"></div>
+        <div data-slot="Second hand" class="slot">
+        <?php if (method_exists($arena->getHero(), 'getSecondHand') && $arena->getHero()->getSecondHand() !== null) : ?>
+                <img src="<?= $arena->getHero()->getSecondHand()->getImage() ?>" alt="Second hand">
+            <?php endif; ?>
+        </div>
         <div data-slot="Head" class="slot">
             <?php if (method_exists($arena->getHero(), 'getHelmet') && $arena->getHero()->getHelmet() !== null) : ?>
                 <img src="<?= $arena->getHero()->getHelmet()->getImage() ?>" alt="helmet">
             <?php endif; ?>
-
         </div>
         <div data-slot="Ring" class="slot"></div>
         <div data-slot="Armory" class="slot"></div>

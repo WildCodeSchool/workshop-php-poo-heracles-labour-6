@@ -5,6 +5,7 @@
     --secondary-color:#282c2c;
     --ternary-color:#eca900;
     --danger-color: #851d04;
+    --success-color: #138504;
     --dark:black;
     --light:white;
     --transparent-light: #ffffffbb;
@@ -77,6 +78,14 @@ h2 {
     text-decoration: none;
 }
 
+.btn-shovel {
+    display: inline-flex;
+    width: 72px;
+}
+.btn img {
+    max-width: 20px;
+    margin-right: var(--spacing);
+}
 .btn:hover {
     filter: brightness(110%);
 }
@@ -98,11 +107,11 @@ a:any-link {
     color: var(--dark);
 }
 
-.error:empty {
+.flash:empty {
     display: none;
 }
 
-.error {
+.flash {
     background-color: var(--light);
     color: var(--danger-color);
     border-radius: 4px;
@@ -112,6 +121,13 @@ a:any-link {
     top: var(--spacing);
     right: var(--spacing);
 }
+
+.success {
+    color: var(--success-color);
+    right: unset;
+    font-size: var(--title-font-size);
+}
+
 /*** FIGHT **/
 
 

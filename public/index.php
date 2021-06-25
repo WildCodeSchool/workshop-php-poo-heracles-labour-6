@@ -30,7 +30,12 @@ try {
     }  
     if (isset($_GET['interact']) && $_GET['interact'] === 'dig' && method_exists($arena, 'dig')) {
         $arena->dig();
-    }  
+    }
+
+    if(method_exists($arena, 'isVictory') && $arena->isVictory()) {
+        $success = 'VICTORY';
+    }
+
 } catch (Exception $exception) {
     $error = $exception->getMessage();
 }
@@ -54,7 +59,8 @@ try {
         <a class="btn reset" href="?reset=reset">Reset</a>
     </header>
     <main>
-        <div class="error"><?= $error ?? ''; ?></div>
+        <div class="flash error"><?= $error ?? ''; ?></div>
+        <div class="flash success"><?= $success ?? ''; ?></div>
         <div class="fighters">
             <a href="#hero">
                 <div class="fighter">
