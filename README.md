@@ -10,29 +10,27 @@ La prochaine mission d'Héraclès est de nettoyer les écuries d'Augias (Augean 
 
 > De plus, tu verras dans index.php que la classe `Arena` n'est plus directement utilisée. Ce sera la classe `ArenaAugeas`. Jusqu'à maintenant, toute la phase d'initialisation d'une partie se faisait directement dans *index.php* (qui devenait plutôt long !). On y trouvait la création et le positionnement des tuiles, des combattants, des équipements, *etc.*. Or, chaque arène correspond à un des travaux, avec sa propre carte, ses propres monstres *etc.*. La logique d'initialisation est donc déportée directement dans le `__construct()` de `ArenaAugeas`, car elle n'a pas vocation à être modifiée, l'emplacement des tuiles et le type de monstre est associé au niveau en cours. Le fichier *index.php* est maintenant bien plus clair et les comportements propres uniquement à un niveau vont pouvoir être définis sans venir surcharger la classe `Arena`.
 
-# Nettoyage de printemps 
+Tu vois la nouvelle carte. Il s'y trouve de l'eau, de l'herbe un nouveau type de tuile, `Building` qui a également été ajouté (il est  *crossable*).
 
-Tu vois la nouvelle carte. Il s'y trouve de l'eau, de l'herbe un nouveau type de tuile, `Building` qui a également été ajouté (il n'est pas *crossable*).
-
-Les écuries d'Augias, c'est la m**** ! Il faut nettoyer tout cela, et avant la fin de la journée. Une seule méthode pour notre héros surhumain, détourner le lit de la rivière pour faire passer les flots directement dans le bâtiment. Décrassage assuré. Pour commencer, il va donc falloir creuser !
+Les écuries d'Augias, c'est la m**** ! Il faut nettoyer tout cela, et avant la fin de la journée. Une seule méthode pour notre héros surhumain, détourner le lit du fleuve pour faire passer les flots directement dans le bâtiment. Décrassage assuré. Pour commencer, il va donc falloir creuser !
 
 # Du travail à la pelle
 
-Pour pouvoir creuser, il faut une pelle. 
-Commence par créer une classe Shovel dans le dossier Inventory. La pelle pourrait hérité de Weapon, mais même si un bon coup de pelle peut faire mal, nous allons partir du principe qu'Héraclès va plutôt s'en servir en accessoire, qu'il tiendra dans sa seconde main. Si tu ouvres l'inventaire sur l'interface graphique, tu vois une slot "Second Hand" sous l'arme. C'est ici que la pelle devra aparaître. Pour cela, il lui faut une image, comme pour l'arme, comme pour le bouclier, comme pour... tu vois on cela nous mène ? Oui ! créons une nouvelle interface `Equipable` qui contiendra la méthode `getImage(): string` et fais en sorte que toutes les classes d'équipement l'implémente. Utilise le fichier *shovel.svg* pour la classe Shovel.
+Et pour pouvoir creuser, il faut une pelle. 
+Commence par créer une classe Shovel dans le dossier Inventory. La pelle *pourrait* hérité de `Weapon`, mais même si un bon coup de pelle peut faire mal, nous allons partir du principe qu'Héraclès va plutôt s'en servir en accessoire, qu'il tiendra dans sa seconde main. Si tu ouvres l'inventaire sur l'interface graphique, tu vois une slot "Second Hand" sous l'arme. C'est ici que la pelle devra aparaître. Pour cela, il lui faut une image, comme pour l'arme, comme pour le bouclier, comme pour... tu vois ou cela nous mène ? Oui ! créons une nouvelle interface `Equipable` qui contiendra la méthode `getImage(): string` et fais en sorte que toutes les classes d'équipement l'implémente. Utilise le fichier *shovel.svg* pour la classe Shovel.
 
-Ajouter une propriété $secondHand de type Equipable ou null, et créé le getter et setter associé.
+Ajouter une propriété `$secondHand` de type Equipable ou null, et créé les *getter* et *setter* associés.
 Modifie `ArenaAugeas` pour qu'Héraclès ait bien son arme en seconde main.
 
 # Des ptits trous, des ptits trous.
 
-Notre héros va maintenant pouvoir creuser (le fait d'avoir une pelle dans la main, un bouton "Dig" est apparu sur l'interface !). Partons du principe que ce mécanisme de gameplay ne sera disponible que pour ce niveau, créé donc une méthode `digArena()` dans `ArenaAugeas`. Cette méthode va
-1. Vérifier que le héros se trouve sur une tuile de type `Grass` qui vont être les seules qu'il pourra creuser. Sinon renvoyer une exception
+Notre héros va maintenant pouvoir creuser (le simple fait d'avoir une pelle dans la main, un bouton "Dig" est apparu sur l'interface !). Partons du principe que ce mécanisme de *gameplay* ne sera disponible que pour ce niveau : créé une méthode `digArena()` dans `ArenaAugeas`. Cette méthode va :
+1. Vérifier que le héros se trouve sur une tuile de type `Grass` qui vont être les seules qu'il pourra creuser. Sinon renvoyer une exception.
 2. Vérifier que le héros porte bien une pelle en seconde main, sinon renvoyer une exception.
 
-Les tuiles de type `Grass` étant creusables, elles vont avoir 2 états possibles (creusées ou non). Commence par y ajouter une propriété `$digged`, de type booléen et `false` par défaut. Ajoute un getter `isDigged` te renvoyant la valeur de ce booléen.
+Les tuiles de type `Grass` étant creusables, elles vont avoir 2 états possibles (creusées ou non). Commence par y ajouter une propriété `$digged`, de type booléen avec la valeur `false` par défaut. Ajoute un getter `isDigged` te renvoyant la valeur de ce booléen.
 
-Créé ensuite une méthode `dig()` dans `Tile`, qui va avoir pour rôle de passer la propriété `$digged` à `true`.
+Créé ensuite une méthode `dig()` dans `Grass`, qui va avoir pour rôle de passer la propriété `$digged` à `true`.
 On a ainsi l'information de savoir si la tuile est creusée ou non, mais visuellement, sur la carte, il n'y a pas d'impact. Pour que cela soit plus visible, fais également en sorte que la méthode `dig()` modifie l'image en `hole.png`.
 
 # Fill good
