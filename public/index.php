@@ -28,6 +28,9 @@ try {
     if (isset($_GET['fight']) && method_exists($arena, 'battle')) {
         $arena->battle($_GET['fight']);
     }  
+    if (isset($_GET['interact']) && $_GET['interact'] === 'dig' && method_exists($arena, 'dig')) {
+        $arena->dig();
+    }  
 } catch (Exception $exception) {
     $error = $exception->getMessage();
 }
