@@ -19,7 +19,7 @@ Dans les écuries d'Augias, les pieds de notre héros disparaissent dans une cou
 Et pour pouvoir creuser, il faut une pelle. 
 Commence par créer une classe Shovel dans le dossier Inventory. La pelle *pourrait* hérité de `Weapon`, mais même si un bon coup de pelle peut faire mal, nous allons partir du principe qu'Héraclès va plutôt s'en servir en accessoire, qu'il tiendra dans sa seconde main. Si tu ouvres l'inventaire sur l'interface graphique, tu vois une slot "Second Hand" sous l'arme. C'est ici que la pelle devra aparaître. Pour cela, il lui faut une image, comme pour l'arme, comme pour le bouclier, comme pour... tu vois ou cela nous mène ? Oui ! créons une nouvelle interface `Equipable` qui contiendra la méthode `getImage(): string` et fais en sorte que toutes les classes d'équipement l'implémente. Utilise le fichier *shovel.svg* pour la classe Shovel.
 
-Ajouter une propriété `$secondHand` de type Equipable ou null, et créé les *getter* et *setter* associés.
+Dans `Hero`, ajoute une propriété `$secondHand` de type `Equipable` ou `null`, et créé les *getter* et *setter* associés.
 Modifie `ArenaAugeas` pour qu'Héraclès ait bien son arme en seconde main.
 
 # Des ptits trous, des ptits trous.
