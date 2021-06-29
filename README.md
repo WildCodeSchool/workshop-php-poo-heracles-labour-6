@@ -35,6 +35,8 @@ Les tuiles de type `Grass` étant creusables, elles vont avoir 2 états possible
 Créé ensuite une méthode `dig()` dans `Grass`, qui va avoir pour rôle de passer la propriété `$digged` à `true`.
 On a ainsi l'information de savoir si la tuile est creusée ou non, mais visuellement, sur la carte, il n'y a pas d'impact. Pour que cela soit plus visible, fais également en sorte que la méthode `dig()` modifie l'image en `hole.png`.
 
+Enfin, utilise cette méthode `dig()` dans `digArena()`.
+
 # Fill good
 
 L'idée maintenant, c'est de pouvoir dévier le cours de la rivière. Ainsi, si tu creuses juste à côté de l'eau, il faut faire en sorte que ton trou se "remplisse" instantanément. Ta tuile va donc passer de Grass non creusé à Grass creusée puis se changer en Water.
