@@ -1,7 +1,7 @@
 <?php
 
 if (isset($arena)) : ?>
-    <?php if(method_exists($arena->getHero(), 'digArena')) : ?>
+    <?php if(method_exists($arena, 'digArena')) : ?>
     <a class="btn btn-primary btn-shovel" href="?interact=dig"><img src="assets/images/shovel.svg"><span>Dig</span></a>
     <?php endif; ?>
     <div class="map" style="--tiles-number: <?= $arena->getSize() ?>">
