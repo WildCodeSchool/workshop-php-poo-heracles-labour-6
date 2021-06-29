@@ -39,14 +39,15 @@ Enfin, utilise cette méthode `dig()` dans `digArena()`.
 
 # Fill good
 
-L'idée maintenant, c'est de pouvoir dévier le cours de la rivière. Ainsi, si tu creuses juste à côté de l'eau, il faut faire en sorte que ton trou se "remplisse" instantanément. Ta tuile va donc passer de Grass non creusé à Grass creusée puis se changer en Water.
+L'idée maintenant, c'est de pouvoir dévier le cours de la rivière. Ainsi, si tu creuses juste à côté de l'eau, il faut faire en sorte que ton trou se "remplisse" instantanément. Ta tuile va donc passer de `Grass` "non creusée" à `Grass` "creusée" puis se changer en `Water`.
 
-Dans `digArena()`, juste après l'appel à la méthode `dig()` de la tuile, tu vas appeler une méthode privée `fill()` qui va contenir la logique de ce remplissage.
+Dans `digArena()`, juste après l'appel à la méthode `dig()`, tu vas appeler une méthode privée `fill(Tile $tile)` qui va contenir la logique de ce remplissage.
 
 Dans `fill()` tu vas devoir
-1. Récupérer les cases adjascente à la case creusée. Pour cela créée une méthode privée `getAdjacentTiles()`
+1. Récupérer les quatre cases adjascentes à la case creusée (pas les diagonales).
+Pour cela, créée une méthode privée `getAdjacentTiles(Tile $tile)` qui renverra un tableau (oui nous crééons plein de petites méthodes, avec chacune un petit bout de la logique, c'est plus propre ainsi)
 2. Vérifier si l'une de ces tuiles et de type `Water`.
-3. Si c'est le cas, tu vas échanger la tuile Grass sous le héros par une nouvelle tuile de type Water. Pour réaliser cela, tu vas créer une publice méthode `addTile()` et `removeTile()` contenant cette logique. Ce mécanisme étant assez générique, tu crééra ces méthodes directement dans `Arena`. Réfléchis aux paramètres et à l'implémentation. Une fois que cela fonctionne, créer une méthode `switchTile(Tile $oldTile, Tile $newTile)` qui sera plus simple à utiliser, et qui se reposera sur les deux méthodes précédentes.
+3. Si c'est le cas, tu vas échanger la tuile `Grass` creusée par une nouvelle tuile de type `Water`. Pour réaliser cela, tu vas créer une publice méthode `addTile(Tile $tile)` et `removeTile(Tile $tile)` contenant cette logique. Ce mécanisme étant assez générique (pas spécifiquement propre à `ArenaAugeas`), tu crééra ces méthodes directement dans `Arena`. Une fois que cela fonctionne, créer une méthode `replaceTile(Tile $newTile)` qui en s'appuyant sur les deux méthodes précédentes, ajoutera la nouvelle tuile en supprimant la précédente à la même place.
 
 Super, si tu creuses loin de l'eau, tu fais un trou, si tu creuses le long de l'eau, tu commences à déplacer le lit de la rivière.
 
@@ -58,11 +59,11 @@ Quelle est le problème ? Reprenons le déroulé de ton code
 1. Héraclès creuse dans l'herbe
 2. Un trou se forme
 3. S'il y a de l'eau à coté de ce trou, il se transforme en eau.
-Mais à aucun moment on ne cherche à voir si cette nouvelle tuile d'eau se trouve elle même à proximité d'un trou qu'elle devrait alors remplir. Puis si cette nouvelle tuile d'eau se trouve elle même à proximité d'un trou qu'elle devrait alors remplir. nouvelle tuile d'eau se trouve elle même à proximité d'un trou qu'elle devrait alors remplir. Puis .... STOP ! 
+Mais à aucun moment on ne cherche à voir si cette nouvelle tuile d'eau se trouve elle même à proximité d'un trou qu'elle devrait alors remplir. Puis si cette nouvelle tuile d'eau se trouve elle même à proximité d'un trou qu'elle devrait alors remplir. Puis si cette nouvelle tuile d'eau se trouve elle même à proximité d'un trou qu'elle devrait alors remplir. Puis .... STOP ! 
 
 Comme tu le vois, il va falloir utiliser la méthode `fill()` un nombre indéfini de fois. Et à chaque utilisation de `fill()`, il faut retenter de *fill* les éventuels trous jusqu'à ce qu'il n'y en ait plus. La méthode `fill()` va donc devoir **s'appeller elle même**, tant que la condition de sortie (absence de trou adjacent non remplis) ne sera pas validée. C'est celà la **récursivité**.
 
-Reprend donc le code de `fill()`.
+Reprend donc le code de `fill()`. La méthode :
 1. Récupères les tuiles adjascentes au trou
 2. Boucles sur celles-ci. 
 3. Si l'une d'entre elle est de type Water, on modifie le trou en eau.
