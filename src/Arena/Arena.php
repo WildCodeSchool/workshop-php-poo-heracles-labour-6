@@ -145,13 +145,4 @@ class Arena
     {
         return $this->tiles;
     }
-
-    public function addTile(Tile $tile, int $x, int $y): void
-    {
-        if($this->getTile($x, $y) === null && $x > 0 && $x >= $this->getSize() && $y > 0 && $y >= $this->getSize()) {
-            $this->tiles[] = $tile;
-        } else {
-            throw new Exception('Impossible to add the Tile at position ' . $x . ' ' . $y);
-        }
-    }
 }
