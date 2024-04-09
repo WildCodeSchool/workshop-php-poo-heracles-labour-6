@@ -84,3 +84,7 @@ Tous les trous se remplissent bien, Héraclès remercie Poséidon pour son aide 
 Pour mener à bien son travail, notre héros doit amener le lit de la rivière jusqu'aux portes des écuries. Crée une méthode `isVictory()` dans `ArenaAugeas`. Cette méthode renverra `true` si les conditions de la victoire sont remplis. Pour être certain que cette méthode soit présente pour toutes les arènes futures, ajoute une méthode abstraite `isVictory()`  dans la classe mère `Arena`. La méthode est abstraite car l'implémentation de la victoire sera différente pour chacun des travaux. Attention, la classe `Arena` devient donc elle-même abstraite.
 
 Pour faire au plus simple, nous allons partir du principe que, pour ce niveau, il faut qu'il y ait de l'eau sur la tuile de coordonnées 5,7 qui est juste devant les "portes" de l'écurie. Afin de ne pas mettre les valeurs en dur, crée deux constantes `VICTORY_X = 5` et `VICTORY_Y = 7` dans `ArenaAugeas`. Dans la méthode `isVictory()`, teste si la tuile aux coordonnées de VICTORY X et Y est de type Water, si c'est bien le cas renvoie `true`, sinon renvoie `false`. La méthode est appelée dans *index.php* à chaque fois qu'une action est effectuée par le héros. Dès lors que la méthode renvoie `true`, un message est affiché à l'écran pour signifier la victoire, félicitations ! 
+
+
+Et bravo pour ta ténacité 👏, tu es arrivé au bout de cette série d'ateliers 🙌 !
+{: .text-center }
